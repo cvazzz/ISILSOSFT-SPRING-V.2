@@ -1,0 +1,73 @@
+-- Crear la base de datos
+CREATE DATABASE miSistemaBD;
+GO
+
+USE miSistemaBD;
+GO
+
+-- Crear la tabla Usuario
+CREATE TABLE Usuario (
+    codigo INT PRIMARY KEY IDENTITY,
+    correo NVARCHAR(255),
+    password NVARCHAR(255)
+);
+
+-- Agregar valores a la tabla Usuario
+INSERT INTO Usuario (correo, password) VALUES
+('usuario1@example.com', 'password1'),
+('usuario2@example.com', 'password2'),
+('usuario@example.com', 'password3'),
+('usuario4@example.com', 'password4');
+
+-- Crear la tabla PartidoPolitico
+CREATE TABLE PartidoPolitico (
+    codigo INT PRIMARY KEY IDENTITY,
+    nombrePartido NVARCHAR(255),
+    simbolo NVARCHAR(255)
+);
+
+-- Agregar valores a la tabla PartidoPolitico
+INSERT INTO PartidoPolitico (nombrePartido, simbolo) VALUES
+('Partido A', 'A'),
+('Partido B', 'B');
+
+-- Crear la tabla Sucursal
+CREATE TABLE Sucursal (
+    codigo INT PRIMARY KEY IDENTITY,
+    nombre NVARCHAR(255),
+    direccion NVARCHAR(255),
+    estado INT
+);
+
+
+-- Crear la tabla Alumno
+CREATE TABLE Alumno (
+    codigo INT PRIMARY KEY IDENTITY,
+    nombres NVARCHAR(255),
+    apellidoPaterno NVARCHAR(255),
+    apellidoMaterno NVARCHAR(255),
+    codigoUsuario INT FOREIGN KEY REFERENCES Usuario(codigo)
+);
+
+-- Agregar valores a la tabla Alumno
+-- Asignando usuarios existentes
+INSERT INTO Alumno (nombres, apellidoPaterno, apellidoMaterno, codigoUsuario) VALUES
+('Juan', 'Pérez', 'Gómez', 1),
+('María', 'López', 'Martínez', 2),
+('Sebas', 'Ames', 'Flores', 3),
+('María', 'Garcia', 'Clud', 4);
+
+-- Crear la tabla Voto
+CREATE TABLE Voto (
+    codigo INT PRIMARY KEY IDENTITY,
+    codigoAlumno INT FOREIGN KEY REFERENCES Alumno(codigo),
+    codigoPartido INT FOREIGN KEY REFERENCES PartidoPolitico(codigo)
+);
+
+-- Agregar valores a la tabla Voto
+-- Asignando alumnos y partidos existentes
+INSERT INTO Voto (codigoAlumno, codigoPartido) VALUES
+(1, 1),
+(2, 2);
+
+
